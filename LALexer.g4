@@ -134,14 +134,10 @@ CIRCUNF: '^';
 EZINHO: '&';
 SEQUENCIA: '..';
 
-SIFRAO: '$';
-TIL: '~';
-CHAVE: '}';
+ERR: ('$' | '~' | '}');
 
 Comentario: ('{' | '{ ') ~('\n'|'\r')* '}' -> skip;
 
-Nao_fechado: ('{' | '{ ') ('a'..'z' | '_' | 'A'..'Z') ('a'..'z' | '_' | '0'..'9' | 'A'..'Z')* ('\n' | '\r');
+Nao_fechado: ('{' | '{ ') ~('\n'| '\r' | '}')* ('\n' | '\r');
 
-Literal_Nao_Fechada: '\'' (~('\n'|'\''|'\\'))* ('\n' | '\r');
-
-ERR: .;
+Literal_Nao_Fechada: '"' (~('\n'|'\''|'\\' | '"'))* ('\n' | '\r');

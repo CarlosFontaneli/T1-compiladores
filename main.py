@@ -9,26 +9,6 @@ if len(sys.argv) < 3:
     )
     sys.exit(1)
 
-tipos_definidos = [
-    "ALGORITMO",
-    "FIM_ALGORITMO",
-    "FACA",
-    "DECLARE",
-    "CONSTANTE",
-    "TIPOO",
-    "COCHESQ",
-    "COCHDIR",
-    "LITERAL",
-    "INTEIRO",
-    "REAL",
-    "LOGICO",
-    "REGISTROO",
-    "FIMREGISTRO",
-    "PROCEDIMENTO",
-    "FIMPROCED",
-    "FUNCAO",
-    "FIM_FUNCAO",
-]
 # Obtém o nome do arquivo a partir dos argumentos
 input_file_name = sys.argv[1]
 output_file_name = sys.argv[2]
@@ -52,20 +32,17 @@ try:
         txt = "'" + token.text + "'"
         typeStr = LALexer.symbolicNames[token.type]
         if typeStr == "Nao_fechado":
-            output.writelines(f"Linha  {token.line} : comentario nao fechado\n")
+            output.writelines(f"Linha {token.line}: comentario nao fechado\n")
             break
 
         elif typeStr == "Literal_Nao_Fechada":
-            output.writelines("Linha " + token.line + ": cadeia literal nao fechada\n")
+            output.writelines(f"Linha {token.line}: cadeia literal nao fechada\n")
             break
 
-        elif typeStr == "ERR":
+        elif typeStr == "ERR" or typeStr in erros:
+            print(typeStr)
             output.writelines(
-                "Linha "
-                + token.line
-                + ": "
-                + token.text
-                + " - simbolo nao identificado\n"
+                f"Linha {token.line}: {token.text} - simbolo nao identificado\n"
             )
             break
 
