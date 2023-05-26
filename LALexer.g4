@@ -134,7 +134,7 @@ CIRCUNF: '^';
 EZINHO: '&';
 SEQUENCIA: '..';
 
-ERR: ('$' | '~' | '}');
+ERR: ('$' | '~' | CADEIA'}');
 
 Comentario: ('{' | '{ ') ~('\n'|'\r')* '}' -> skip;
 
