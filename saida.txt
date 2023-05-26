@@ -1,0 +1,28 @@
+<'algoritmo',ALGORITMO>
+<'declare',DECLARE>
+<'nome',IDENT>
+<':',DELIM>
+<'literal',LITERAL>
+<'declare',DECLARE>
+<'idade',IDENT>
+<':',DELIM>
+<'inteiro',INTEIRO>
+<'leia',LEIA>
+<'(',ABREPAR>
+<'nome',IDENT>
+<')',FECHAPAR>
+<'leia',LEIA>
+<'(',ABREPAR>
+<'idade',IDENT>
+<')',FECHAPAR>
+<'escreva',ESCREVA>
+<'(',ABREPAR>
+<'nome',IDENT>
+<',',SEPAR>
+<'" tem "',CADEIA>
+<',',SEPAR>
+<'idade',IDENT>
+<',',SEPAR>
+<'" anos."',CADEIA>
+<')',FECHAPAR>
+<'fim_algoritmo',FIM_ALGORITMO>
