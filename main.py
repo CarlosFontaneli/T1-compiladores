@@ -5,7 +5,7 @@ from LALexer import LALexer
 # Verifique se foi fornecido o nome do arquivo como argumento
 if len(sys.argv) < 3:
     print(
-        "É necessário fornecer o nome dos arquivos de entrada e saida como argumento."
+        "É necessário fornecer o nome dos arquivos de entrada e saída como argumento."
     )
     sys.exit(1)
 
@@ -31,15 +31,16 @@ try:
     while token.type != Token.EOF:
         txt = "'" + token.text + "'"
         typeStr = LALexer.symbolicNames[token.type]
-        if typeStr == "Nao_fechado":
+        print(typeStr)
+        if typeStr == "COMENTARIO_NAO_FECHADO":
             output.writelines(f"Linha {token.line}: comentario nao fechado\n")
             break
 
-        elif typeStr == "Literal_Nao_Fechada":
+        elif typeStr == "CAD_LITERAL_NAO_FECHADA":
             output.writelines(f"Linha {token.line}: cadeia literal nao fechada\n")
             break
 
-        elif typeStr == "ERR" or typeStr in erros:
+        elif typeStr == "ERR_SIMBOLO_NAO_PERMITIDO":
             print(typeStr)
             output.writelines(
                 f"Linha {token.line}: {token.text} - simbolo nao identificado\n"
@@ -58,3 +59,6 @@ try:
 
 except IOError:
     print("Erro ao abrir o arquivo:", input_file_name)
+
+# java -jar compiladores-corretor-automatico-1.0-SNAPSHOT-jar-with-dependencies.jar 'python ../../T1-compiladores/main.py' gcc ./temp ../../casos-de-teste/ '769949' -t1
+# pip install antlr4-python3-runtime

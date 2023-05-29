@@ -49,9 +49,16 @@ FALSO: 'falso';
 SEJA: 'seja';
 NAO: 'nao';
 
+fragment CORPO: (DECLARACAO_LOCAL)* (CMD)*;
+
 fragment DECLARACAO_LOCAL: 'declare' VARIAVEL
                 | 'constante' IDENT DELIM TIPO_BASICO '=' VALOR_CONSTANTE
                 | 'tipo' IDENT DELIM TIPO;
+fragment DECLARACAO_GLOBAL: 'procedimento' IDENT ABREPAR (PARAMETROS)? FECHAPAR (DECLARACAO_LOCAL)* (CMD)* 'fim_procedimento'
+                 | 'funcao' IDENT ABREPAR (PARAMETROS)? FECHAPAR DELIM TIPO_ESTENDIDO (DECLARACAO_LOCAL)* (CMD)* 'fim_funcao';
+
+OP_UNARIO: '-';
+
 fragment VARIAVEL: IDENTIFICADOR (SEPAR IDENTIFICADOR)* DELIM TIPO;
 fragment IDENTIFICADOR: IDENT (PONTO IDENT)* DIMENSAO;
 fragment DIMENSAO: ('[' EXP_ARITMETICA ']')*;
@@ -61,11 +68,10 @@ fragment TIPO_BASICO_IDENT: TIPO_BASICO | IDENT;
 fragment TIPO_ESTENDIDO: (CIRCUNF)? TIPO_BASICO_IDENT;
 fragment VALOR_CONSTANTE: CADEIA | NUM_INT | NUM_REAL | 'verdadeiro' | 'falso';
 fragment REGISTRO: 'registro' (VARIAVEL)* 'fim_registro';
-fragment DECLARACAO_GLOBAL: 'procedimento' IDENT ABREPAR (PARAMETROS)? FECHAPAR (DECLARACAO_LOCAL)* (CMD)* 'fim_procedimento'
-                 | 'funcao' IDENT ABREPAR (PARAMETROS)? FECHAPAR DELIM TIPO_ESTENDIDO (DECLARACAO_LOCAL)* (CMD)* 'fim_funcao';
+
 fragment PARAMETRO: ('var')? IDENTIFICADOR (SEPAR IDENTIFICADOR)* DELIM TIPO_ESTENDIDO;
 fragment PARAMETROS: PARAMETRO (SEPAR PARAMETRO)*;
-fragment CORPO: (DECLARACAO_LOCAL)* (CMD)*;
+
 fragment CMD: CMD_LEIA | CMD_ESCREVA | CMD_SE | CMD_CASO | CMD_PARA | CMD_ENQUANTO | CMD_FACA | CMD_ATRIBUICAO | CMD_CHAMADA | CMD_RETORNE;
 fragment CMD_LEIA: 'leia' ABREPAR ((CIRCUNF)? IDENTIFICADOR (SEPAR (CIRCUNF)? IDENTIFICADOR)*) FECHAPAR;
 fragment CMD_ESCREVA: 'escreva' ABREPAR EXPRESSAO (SEPAR EXPRESSAO)* FECHAPAR;
@@ -82,7 +88,7 @@ fragment ITEM_SELECAO: CONSTANTES DELIM (CMD)*;
 fragment CONSTANTES: NUMERO_INTERVALO (SEPAR NUMERO_INTERVALO)*;
 fragment NUMERO_INTERVALO: (OP_UNARIO)? NUM_INT ('..' (OP_UNARIO)? NUM_INT)?;
 fragment OP_RELACIONAL: '=' | '<>' | '>=' | '<=' | '>' | '<';
-OP_UNARIO: '-';
+
 fragment EXP_ARITMETICA: TERMO (OP1 TERMO)*;
 fragment TERMO: FATOR (OP2 FATOR)*;
 fragment FATOR: PARCELA (OP3 PARCELA)*;
@@ -134,10 +140,10 @@ CIRCUNF: '^';
 EZINHO: '&';
 SEQUENCIA: '..';
 
-ERR: ('$' | '~' | CADEIA'}');
+ERR_SIMBOLO_NAO_PERMITIDO: ('$' | '~' | '}');
 
-Comentario: ('{' | '{ ') ~('\n'|'\r')* '}' -> skip;
+COMENTARIO:'{' ~[\r\n{}]* '}' [\r]? [\n]? -> skip;
 
-Nao_fechado: ('{' | '{ ') ~('\n'| '\r' | '}')* ('\n' | '\r');
+COMENTARIO_NAO_FECHADO: ('{' | '{ ') ~('\n'| '\r' | '}')* ('\n' | '\r');
 
-Literal_Nao_Fechada: '"' (~('\n'|'\''|'\\' | '"'))* ('\n' | '\r');
+CAD_LITERAL_NAO_FECHADA: '"' (~('\n'|'\''|'\\' | '"'))* ('\n' | '\r');
