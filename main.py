@@ -5,7 +5,7 @@ from LALexer import LALexer
 # Verifique se foi fornecido o nome do arquivo como argumento
 if len(sys.argv) < 3:
     print(
-        "É necessário fornecer o nome dos arquivos de entrada e saída como argumento."
+        "É preciso de pelo menos dois argumentos com os respectivos nomes de arquivos de entrada e saída."
     )
     sys.exit(1)
 
@@ -20,7 +20,7 @@ try:
     # Inicialize o analisador léxico com o input stream
     lexer = LALexer(input_stream)
 
-    # Obtenha o próximo token
+    # Obendo o primeiro token
     token = lexer.nextToken()
 
     tipos_definidos = ["IDENT", "CADEIA", "NUM_INT", "NUM_REAL"]
@@ -33,11 +33,11 @@ try:
         typeStr = LALexer.symbolicNames[token.type]
         print(typeStr)
         if typeStr == "COMENTARIO_NAO_FECHADO":
-            output.writelines(f"Linha {token.line}: comentario nao fechado\n")
+            output.writelines(f"Linha {token.line}: comentario não fechado\n")
             break
 
         elif typeStr == "CAD_LITERAL_NAO_FECHADA":
-            output.writelines(f"Linha {token.line}: cadeia literal nao fechada\n")
+            output.writelines(f"Linha {token.line}: cadeia literal não fechada\n")
             break
 
         elif typeStr == "ERR_SIMBOLO_NAO_PERMITIDO":
@@ -58,7 +58,7 @@ try:
         token = lexer.nextToken()
 
 except IOError:
-    print("Erro ao abrir o arquivo:", input_file_name)
+    print("Erro abrindo arquivo", input_file_name)
 
 # java -jar compiladores-corretor-automatico-1.0-SNAPSHOT-jar-with-dependencies.jar 'python ../../T1-compiladores/main.py' gcc ./temp ../../casos-de-teste/ '769949' -t1
 # pip install antlr4-python3-runtime
