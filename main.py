@@ -33,11 +33,11 @@ try:
         typeStr = LALexer.symbolicNames[token.type]
         print(typeStr)
         if typeStr == "COMENTARIO_NAO_FECHADO":
-            output.writelines(f"Linha {token.line}: comentario não fechado\n")
+            output.writelines(f"Linha {token.line}: comentario nao fechado\n")
             break
 
         elif typeStr == "CAD_LITERAL_NAO_FECHADA":
-            output.writelines(f"Linha {token.line}: cadeia literal não fechada\n")
+            output.writelines(f"Linha {token.line}: cadeia literal nao fechada\n")
             break
 
         elif typeStr == "ERR_SIMBOLO_NAO_PERMITIDO":
